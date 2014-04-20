@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<oauth name="qq">
+		<appid>100534907</appid>
+		<appkey>15fa1e3a9665b25f93a5221b0251ef3b</appkey>
+		<callbackUrl>www.5i-mobile.com/wsyy/jaxrs/user/qq_callback</callbackUrl>
+	</oauth>
+	<oauth name="weibo">
+		<appid>100534907</appid>
+		<appkey>15fa1e3a9665b25f93a5221b0251ef3b</appkey>
+	</oauth>
+</config>

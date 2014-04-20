@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation=" 
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx.xsd
+            ">
+
+	<bean id="auto_ds" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+		<property name="driver">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="driverUrl">
+			<value>jdbc:mysql://localhost:3306/auto?useUnicode=true&amp;characterEncoding=utf8</value>
+		</property>
+		<property name="user" value="auto" />
+		<property name="password" value="auto" />
+		<property name="alias" value="proxool_auto" />
+		<property name="prototypeCount" value="0" />
+		<property name="maximumConnectionCount" value="50" />
+		<property name="minimumConnectionCount" value="2" />
+		<property name="simultaneousBuildThrottle" value="50" />
+		<property name="houseKeepingTestSql" value="select CURRENT_DATE" />
+	</bean>
+
+	<bean id="autoJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<!-- <constructor-arg> <bean id="auto_ds"></bean> </constructor-arg> -->
+		<property name="dataSource">
+			<ref bean="auto_ds" />
+		</property>
+	</bean>
+
+
+	<!--开启对注解的支持 -->
+	<bean id="autoTXManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="auto_ds" />
+	</bean>
+	<tx:annotation-driven transaction-manager="autoTXManager" />
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="auto_ds" />
+	</bean>
+
+	<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.care.mybatis.dao.UserMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	
+	<bean id="openIDMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.care.mybatis.dao.OpenIDMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="roleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.care.mybatis.dao.RoleMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+</beans>

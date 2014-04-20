@@ -1,0 +1,15 @@
+QQ
+
+https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=100534907&redirect_uri=http://www.5i-mobile.com/wsyy/jaxrs/user/qq_callback&scope=
+http://gaojie:8080/wsyy/jaxrs/user/qq_callback?code=CF9B7B44951BD3F03C8D8B98E336BDAB
+
+https://graph.qq.com/oauth2.0/token?client_secret=15fa1e3a9665b25f93a5221b0251ef3b&grant_type=authorization_code&redirect_uri=www.5i-mobile.com%2Fwsyy%2Fjaxrs%2Fuser%2Fqq_callback&code=925F2E126E705F15825664C36428F8D0&client_id=100534907
+QQCallback=>200:
+access_token=EB873E01211D5A58CE5400116F4EDB0B&expires_in=7776000&refresh_token=038B10FB32D391692B6EB35060E816BB
+
+
+#导入证书
+sudo keytool -import -file graph.qq.com -keystore /usr/lib/jvm/java-6-openjdk-amd64/jre/lib/security/cacerts -trustcacerts  -alias graph.qq.com
+
+
+{"level":"0","openID":"4E00247302205F855F19E5094ED82C3E","ret":0,"nickname":"Joy杰","figureurl":"http://qzapp.qlogo.cn/qzapp/100534907/4E00247302205F855F19E5094ED82C3E/30","msg":"","gender":"男","figureurl_1":"http://qzapp.qlogo.cn/qzapp/100534907/4E00247302205F855F19E5094ED82C3E/50","figureurl_2":"http://qzapp.qlogo.cn/qzapp/100534907/4E00247302205F855F19E5094ED82C3E/100","figureurl_qq_1":"http://q.qlogo.cn/qqapp/100534907/4E00247302205F855F19E5094ED82C3E/40","figureurl_qq_2":"http://q.qlogo.cn/qqapp/100534907/4E00247302205F855F19E5094ED82C3E/100","is_yellow_vip":"0","vip":"0","yellow_vip_level":"0","is_yellow_year_vip":"0"}
