@@ -44,13 +44,13 @@ public class LoginFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse)resp;
 	
 		//用户没有登陆, 并且访问的不是登陆页, 定向到首页
-		Object user = request.getSession().getAttribute(Constant.SESSION_USER);
-		Object qqUser = request.getSession().getAttribute(Constant.OAUTH_QQ_SESSION_USERINFO);
-		if(user == null && qqUser == null && request.getRequestURI().contains("jaxrs") && !request.getRequestURI().contains("qq_callback")){
-			log.info("{} Redirect To:{}", request.getRequestURI(), request.getContextPath());
-			response.sendRedirect(request.getContextPath());
-			return;
-		}
+//		Object user = request.getSession().getAttribute(Constant.SESSION_USER);
+//		Object qqUser = request.getSession().getAttribute(Constant.OAUTH_QQ_SESSION_USERINFO);
+//		if(user == null && qqUser == null && request.getRequestURI().contains("jaxrs") && !request.getRequestURI().contains("qq_callback")){
+//			log.info("{} Redirect To:{}", request.getRequestURI(), request.getContextPath());
+//			response.sendRedirect(request.getContextPath());
+//			return;
+//		}
 		
 		chain.doFilter(request , response );
 	}

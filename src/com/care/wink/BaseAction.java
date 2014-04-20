@@ -9,39 +9,21 @@ import javax.ws.rs.core.Context;
 
 import org.springframework.context.ApplicationContext;
 
-import com.care.config.Config;
 import com.care.listener.Bootstarp;
 import com.care.utils.JSONUtil;
 
 public class BaseAction {
-	protected Config config;
-	protected ApplicationContext ctx;
 
 	@Context
 	protected HttpServletResponse response;
 	@Context
 	protected HttpServletRequest request;
 
-	public BaseAction() {
-		config = Config.getInstance();
-		ctx = Bootstarp.getCtx();
-	}
-
-	public Config getConfig() {
-		return config;
-	}
-
-	public void setConfig(Config config) {
-		this.config = config;
-	}
-
 	public ApplicationContext getCtx() {
-		return ctx;
+		return Bootstarp.getCtx();
 	}
 
-	public void setCtx(ApplicationContext ctx) {
-		this.ctx = ctx;
-	}
+	 
 
 	protected RetValue getRetValue(String action) {
 		return new RetValue(action);
@@ -54,9 +36,11 @@ public class BaseAction {
 	protected void saveToSession(String k, Object v) {
 		request.getSession().setAttribute(k, v);
 	}
+
 	protected void saveToRequest(String k, Object v) {
 		request.setAttribute(k, v);
 	}
+
 	protected Object getFromSession(String k) {
 		return request.getSession().getAttribute(k);
 	}

@@ -16,7 +16,7 @@
   </icon>
   <servlet>
     <description>JAX-RS Tools Generated - Do not modify</description>
-    <servlet-name>JAX-RS Servlet</servlet-name>
+    <servlet-name>JAX-RS</servlet-name>
     <servlet-class>org.apache.wink.server.internal.servlet.RestServlet</servlet-class>
     <init-param>
       <param-name>applicationConfigLocation</param-name>
@@ -25,7 +25,7 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-    <servlet-name>JAX-RS Servlet</servlet-name>
+    <servlet-name>JAX-RS</servlet-name>
     <url-pattern>/jaxrs/*</url-pattern>
   </servlet-mapping>
 </web-app>
