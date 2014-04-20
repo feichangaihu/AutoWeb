@@ -2,7 +2,7 @@ package com.care.utils;
 
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.json.JSONException;
+import org.codehaus.jackson.map.SerializationConfig;
 import org.json.JSONObject;
 
 /**
@@ -14,6 +14,7 @@ public class JSONUtil {
 	public static ObjectMapper mapper = new ObjectMapper();
 	static {
 		mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		mapper.configure(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS, false);
 	}
 
 	/**

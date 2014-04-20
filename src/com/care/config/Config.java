@@ -1,15 +1,15 @@
 package com.care.config;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.care.utils.HttpUtil;
 import com.care.utils.XMLUtil;
 
 /**
@@ -18,65 +18,53 @@ import com.care.utils.XMLUtil;
  */
 @XmlRootElement
 public class Config {
+	private static final String name = "config.xml";
+	private static Config instance;
+	private static URI confBaseURI;
+	
 	@XmlElement
 	private static Config config;
 
-	private static String path;
-	private static String log4jConfig;
-	private static String xmlConfig;
-
 	@XmlElement(name = "oauth")
 	private List<Oauth> oauths;
-	private static Logger log = LoggerFactory.getLogger(Config.class);
 
-	static {
+	
+	
+
+	public static void refresh(URI confBaseURI) {
+		File xmlFile = null;
 		try {
-			path = System.getProperty("configPath");
-			if (path != null) {
-				
-				log4jConfig = path + "/log4j.properties";
-				xmlConfig = path + "/config.xml";
-				
-				log.info("configPath:{}", path);
-				log.info("log4jConfig:{}", log4jConfig);
-				log.info("xmlConfig:{}", xmlConfig);
-
-				config = XMLUtil.parseXml(new File(xmlConfig), Config.class);
-			} else {
-				log.error("Setting Runtime Arguments -DconfigPath Please");
-				System.exit(100);
-			}
+			xmlFile = new File(confBaseURI.toString(), name);
+			instance = XMLUtil.parseXml(xmlFile, Config.class);
 		} catch (JAXBException e) {
+			System.err.printf("%s: 解析出错!\n", xmlFile.toURI());
 			e.printStackTrace();
-			log.error("Config init: {}", e.getLocalizedMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
 			System.exit(100);
+		} finally {
+			if (instance == null)
+				System.exit(1);
 		}
+	}
+
+	public static Config getInstance(String baseURI) throws URISyntaxException {
+		confBaseURI = HttpUtil.buildURI(baseURI, null);
+		refresh(confBaseURI);
+		return instance;
 	}
 
 	public static Config getInstance() {
-		return config;
-
-	}
-
-	public String getLog4jConfig() {
-		return log4jConfig;
-	}
-
-	public String getXmlConfig() {
-		return xmlConfig;
-	}
-
-	public String getPath() {
-		return path;
+		return instance;
 	}
 
 	public Oauth getOauth(String name) {
-		for(Oauth auth : oauths){
-			if(auth.getName().equals(name)){
+		for (Oauth auth : oauths) {
+			if (auth.getName().equals(name)) {
 				return auth;
 			}
 		}
-		return  null;
+		return null;
 	}
 
 }

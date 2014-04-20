@@ -12,12 +12,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import org.apache.wink.common.annotations.Scope;
-import org.apache.wink.common.annotations.Scope.ScopeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.care.bean.qq.QQBasicUserInfo;
+import com.care.config.Config;
 import com.care.config.Constant;
 import com.care.config.Oauth;
 import com.care.mybatis.bean.OpenID;
@@ -32,13 +31,13 @@ import com.care.utils.JSONUtil;
 import com.care.utils.QQUtil;
 
 @Path("/user")
-@Scope(ScopeType.SINGLETON)
 public class UserAction extends BaseAction {
 
+	
 	private Logger log = LoggerFactory.getLogger(UserAction.class);
-	private UserService userService = ctx.getBean(UserServiceImpl.class);
-	private OpenIDService openIDService = ctx.getBean(OpenIDServiceImpl.class);
-	private RoleService roleService = ctx.getBean(RoleServiceImpl.class);
+	private UserService userService = getCtx().getBean(UserServiceImpl.class);
+	private OpenIDService openIDService = getCtx().getBean(OpenIDServiceImpl.class);
+	private RoleService roleService = getCtx().getBean(RoleServiceImpl.class);
 
 	/**
 	 * qqcallback 1: 接受QQ登陆回调 2:
@@ -57,7 +56,7 @@ public class UserAction extends BaseAction {
 	public void qqCallback(@QueryParam("code") String code) {
 		RetValue rv = getRetValue("QQCallback");
 		try {
-			Oauth qqOauth = config.getOauth(Constant.OAUTH_QQ_NAME);
+			Oauth qqOauth = Config.getInstance().getOauth(Constant.OAUTH_QQ_NAME);
 			// 请求token
 			Map<String, String> accessToken = QQUtil.requestAccessToken(qqOauth, code);
 			log.info("{}:requestAccessToken=>{}", rv.getAction(), accessToken);
@@ -234,9 +233,8 @@ public class UserAction extends BaseAction {
 
 	@POST
 	@Path("saveUserProfile")
-	public String saveUserProfile(@FormParam("userId")int id, @FormParam("email") String email, 
-			@FormParam("name") String name, @FormParam("phone") String phone,
-			@FormParam("password")String password, @FormParam("roleId") int roleId) {
+	public String saveUserProfile(@FormParam("userId") int id, @FormParam("email") String email, @FormParam("name") String name,
+			@FormParam("phone") String phone, @FormParam("password") String password, @FormParam("roleId") int roleId) {
 		RetValue rv = getRetValue("saveUserProfile");
 		log.info("saveUserProfile:{} {}", email, name);
 		try {

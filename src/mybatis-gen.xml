@@ -5,7 +5,7 @@
 <generatorConfiguration>
 	<context id="mysqlTables" targetRuntime="MyBatis3">
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/auto" userId="auto"
+			connectionURL="jdbc:mysql://127.0.0.1:3306/auto" userId="auto"
 			password="auto" />
 
 		<!-- 指定生成的类型为java类型，避免数据库中number等类型字段 -->
@@ -15,25 +15,33 @@
 
 		<!-- 生成model模型，对应的包，存放位置可以指定具体的路径,如/ProjectName/src，也可以使用auto来自动生成 -->
 		<javaModelGenerator targetPackage="com.care.mybatis.bean"
-			targetProject="auto">
+			targetProject="AutoWeb">
 			<property name="enableSubPackages" value="true" />
 		</javaModelGenerator>
 
 		<!--对应的xml mapper文件 -->
 		<sqlMapGenerator targetPackage="com.care.mybatis.dao"
-			targetProject="auto">
+			targetProject="AutoWeb">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
 		<!-- 对应的dao接口 -->
 		<javaClientGenerator type="XMLMAPPER"
-			targetPackage="com.care.mybatis.dao" targetProject="auto">
+			targetPackage="com.care.mybatis.dao" targetProject="AutoWeb">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
 
-		<table tableName="user" domainObjectName="User" />
-		<table tableName="openid" domainObjectName="OpenID" />
-		<table tableName="role" domainObjectName="Role" />
+		<table tableName="ui_corp_desc" domainObjectName="UICorpDesc" >
+			<generatedKey column="ID" sqlStatement="MySql" identity="true" />
+			<columnOverride column="intro" jdbcType="VARCHAR"/>
+			<columnOverride column="big_events" jdbcType="VARCHAR"/>
+			<columnOverride column="leader_says" jdbcType="VARCHAR"/>
+		</table>
+		
+		<table tableName="user_role" domainObjectName="UserRole"></table>
+		<table tableName="user_open_id" domainObjectName="UserOpenId"></table>
+		<table tableName="user_role" domainObjectName="UserRole"></table>
+		
 	</context>
 </generatorConfiguration>
