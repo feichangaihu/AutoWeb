@@ -7,6 +7,10 @@ github地址
     https://github.com/ijie/AutoWeb
     https://github.com/ijie/AutoWeb.git
     
+git文档
+-------------------
+http://www.bootcss.com/p/git-guide/
+    
 ### 配置文件
 		config/
 		├── config.xml				//自定义属性配置文件
