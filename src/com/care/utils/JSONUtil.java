@@ -14,7 +14,7 @@ public class JSONUtil {
 	public static ObjectMapper mapper = new ObjectMapper();
 	static {
 		mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		mapper.configure(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS, false);
+		//mapper.configure(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS, false);
 	}
 
 	/**

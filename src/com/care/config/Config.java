@@ -1,6 +1,7 @@
 package com.care.config;
 
 import java.io.File;
+import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -21,15 +22,13 @@ public class Config {
 	private static final String name = "config.xml";
 	private static Config instance;
 	private static URI confBaseURI;
-	
-	@XmlElement
-	private static Config config;
+
+	public List<Oauth> getOauths() {
+		return oauths;
+	}
 
 	@XmlElement(name = "oauth")
 	private List<Oauth> oauths;
-
-	
-	
 
 	public static void refresh(URI confBaseURI) {
 		File xmlFile = null;

@@ -14,6 +14,7 @@
   	/imgs/logo.jpg
   	</small-icon>
   </icon>
+  
   <servlet>
     <description>JAX-RS Tools Generated - Do not modify</description>
     <servlet-name>JAX-RS</servlet-name>
