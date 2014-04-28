@@ -1,26 +1,24 @@
-/*
-SQLyog Trial v11.33 (64 bit)
-MySQL - 5.5.35-1ubuntu1 : Database - auto
-*********************************************************************
-*/
+-- --------------------------------------------------------
+-- 主机:                           192.168.28.105
+-- 服务器版本:                        5.5.37-0ubuntu0.14.04.1 - (Ubuntu)
+-- 服务器操作系统:                      debian-linux-gnu
+-- HeidiSQL 版本:                  8.3.0.4694
+-- --------------------------------------------------------
 
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
-
-/*!40101 SET SQL_MODE=''*/;
-
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`auto` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
+-- 导出 auto 的数据库结构
+DROP DATABASE IF EXISTS `auto`;
+CREATE DATABASE IF NOT EXISTS `auto` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `auto`;
 
-/*Table structure for table `auto` */
 
+-- 导出  表 auto.auto 结构
 DROP TABLE IF EXISTS `auto`;
-
-CREATE TABLE `auto` (
+CREATE TABLE IF NOT EXISTS `auto` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `content` varchar(500) DEFAULT NULL COMMENT '内容说明',
   `img` varchar(200) DEFAULT NULL COMMENT '图片',
@@ -28,13 +26,12 @@ CREATE TABLE `auto` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `auto` */
+-- 数据导出被取消选择。
 
-/*Table structure for table `auto_fault` */
 
+-- 导出  表 auto.auto_fault 结构
 DROP TABLE IF EXISTS `auto_fault`;
-
-CREATE TABLE `auto_fault` (
+CREATE TABLE IF NOT EXISTS `auto_fault` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `content` varchar(500) DEFAULT NULL COMMENT '故障内容',
   `img` varchar(200) DEFAULT NULL COMMENT '图片地址',
@@ -42,37 +39,34 @@ CREATE TABLE `auto_fault` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `auto_fault` */
+-- 数据导出被取消选择。
 
-/*Table structure for table `auto_fault_type` */
 
+-- 导出  表 auto.auto_fault_type 结构
 DROP TABLE IF EXISTS `auto_fault_type`;
-
-CREATE TABLE `auto_fault_type` (
+CREATE TABLE IF NOT EXISTS `auto_fault_type` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `auto_fault_type` */
+-- 数据导出被取消选择。
 
-/*Table structure for table `auto_type` */
 
+-- 导出  表 auto.auto_type 结构
 DROP TABLE IF EXISTS `auto_type`;
-
-CREATE TABLE `auto_type` (
+CREATE TABLE IF NOT EXISTS `auto_type` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL COMMENT '汽车分类说明',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `auto_type` */
+-- 数据导出被取消选择。
 
-/*Table structure for table `auto_widget` */
 
+-- 导出  表 auto.auto_widget 结构
 DROP TABLE IF EXISTS `auto_widget`;
-
-CREATE TABLE `auto_widget` (
+CREATE TABLE IF NOT EXISTS `auto_widget` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL COMMENT '配件名称',
   `price` float DEFAULT NULL COMMENT '价格',
@@ -83,25 +77,23 @@ CREATE TABLE `auto_widget` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `auto_widget` */
+-- 数据导出被取消选择。
 
-/*Table structure for table `auto_widget_type` */
 
+-- 导出  表 auto.auto_widget_type 结构
 DROP TABLE IF EXISTS `auto_widget_type`;
-
-CREATE TABLE `auto_widget_type` (
+CREATE TABLE IF NOT EXISTS `auto_widget_type` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(200) DEFAULT NULL COMMENT '分类说明',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `auto_widget_type` */
+-- 数据导出被取消选择。
 
-/*Table structure for table `ui_adver` */
 
+-- 导出  表 auto.ui_adver 结构
 DROP TABLE IF EXISTS `ui_adver`;
-
-CREATE TABLE `ui_adver` (
+CREATE TABLE IF NOT EXISTS `ui_adver` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `link` varchar(500) DEFAULT NULL COMMENT '广告链接',
   `desc` varchar(500) DEFAULT NULL COMMENT '广告说明',
@@ -110,54 +102,48 @@ CREATE TABLE `ui_adver` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='汽车广告';
 
-/*Data for the table `ui_adver` */
+-- 数据导出被取消选择。
 
-/*Table structure for table `ui_corp_desc` */
 
+-- 导出  表 auto.ui_corp_desc 结构
 DROP TABLE IF EXISTS `ui_corp_desc`;
-
-CREATE TABLE `ui_corp_desc` (
+CREATE TABLE IF NOT EXISTS `ui_corp_desc` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `intro` text COMMENT '介绍',
   `big_events` text COMMENT '大事记',
   `leader_says` text COMMENT '领导致辞',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='界面数据表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='界面数据表';
 
-/*Data for the table `ui_corp_desc` */
+-- 数据导出被取消选择。
 
-insert  into `ui_corp_desc`(`id`,`intro`,`big_events`,`leader_says`) values (1,'123\r\n','22','33');
 
-/*Table structure for table `ui_knowledge` */
-
+-- 导出  表 auto.ui_knowledge 结构
 DROP TABLE IF EXISTS `ui_knowledge`;
-
-CREATE TABLE `ui_knowledge` (
+CREATE TABLE IF NOT EXISTS `ui_knowledge` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `desc` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='汽车知识';
 
-/*Data for the table `ui_knowledge` */
+-- 数据导出被取消选择。
 
-/*Table structure for table `ui_link` */
 
+-- 导出  表 auto.ui_link 结构
 DROP TABLE IF EXISTS `ui_link`;
-
-CREATE TABLE `ui_link` (
+CREATE TABLE IF NOT EXISTS `ui_link` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `link` varchar(500) DEFAULT NULL,
   `desc` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='友情连接';
 
-/*Data for the table `ui_link` */
+-- 数据导出被取消选择。
 
-/*Table structure for table `ui_news` */
 
+-- 导出  表 auto.ui_news 结构
 DROP TABLE IF EXISTS `ui_news`;
-
-CREATE TABLE `ui_news` (
+CREATE TABLE IF NOT EXISTS `ui_news` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(200) NOT NULL COMMENT '标题',
   `content` text NOT NULL COMMENT '内容',
@@ -166,24 +152,22 @@ CREATE TABLE `ui_news` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公司新闻';
 
-/*Data for the table `ui_news` */
+-- 数据导出被取消选择。
 
-/*Table structure for table `ui_quick_sales` */
 
+-- 导出  表 auto.ui_quick_sales 结构
 DROP TABLE IF EXISTS `ui_quick_sales`;
-
-CREATE TABLE `ui_quick_sales` (
+CREATE TABLE IF NOT EXISTS `ui_quick_sales` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='配件促销';
 
-/*Data for the table `ui_quick_sales` */
+-- 数据导出被取消选择。
 
-/*Table structure for table `ui_video` */
 
+-- 导出  表 auto.ui_video 结构
 DROP TABLE IF EXISTS `ui_video`;
-
-CREATE TABLE `ui_video` (
+CREATE TABLE IF NOT EXISTS `ui_video` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `desc` varchar(500) DEFAULT NULL COMMENT '描述',
   `link` varchar(500) DEFAULT NULL COMMENT '链接',
@@ -191,106 +175,97 @@ CREATE TABLE `ui_video` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='汽车视频';
 
-/*Data for the table `ui_video` */
+-- 数据导出被取消选择。
 
-/*Table structure for table `ui_web_desc` */
 
+-- 导出  表 auto.ui_web_desc 结构
 DROP TABLE IF EXISTS `ui_web_desc`;
-
-CREATE TABLE `ui_web_desc` (
+CREATE TABLE IF NOT EXISTS `ui_web_desc` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `content` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='网站介绍';
 
-/*Data for the table `ui_web_desc` */
+-- 数据导出被取消选择。
 
-/*Table structure for table `user` */
 
+-- 导出  表 auto.user 结构
 DROP TABLE IF EXISTS `user`;
-
-CREATE TABLE `user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `role_id` int(10) unsigned DEFAULT NULL COMMENT '角色id',
   `nick` varchar(100) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
   `phone` varchar(100) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
+  `open_id` varchar(80) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='登陆用户信息';
 
-/*Data for the table `user` */
+-- 数据导出被取消选择。
 
-/*Table structure for table `user_open_id` */
 
+-- 导出  表 auto.user_open_id 结构
 DROP TABLE IF EXISTS `user_open_id`;
-
-CREATE TABLE `user_open_id` (
+CREATE TABLE IF NOT EXISTS `user_open_id` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `open_id` varchar(64) NOT NULL,
   `vendor` varchar(100) DEFAULT NULL,
   `meta` varchar(100) DEFAULT NULL,
-  `date` datetime DEFAULT NULL,
+  `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='open id';
 
-/*Data for the table `user_open_id` */
+-- 数据导出被取消选择。
 
-/*Table structure for table `user_operate` */
 
+-- 导出  表 auto.user_operate 结构
 DROP TABLE IF EXISTS `user_operate`;
-
-CREATE TABLE `user_operate` (
+CREATE TABLE IF NOT EXISTS `user_operate` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
   `name` varchar(100) NOT NULL COMMENT '操作名字',
   `group` int(10) DEFAULT NULL COMMENT '操作组',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户操作表';
 
-/*Data for the table `user_operate` */
+-- 数据导出被取消选择。
 
-/*Table structure for table `user_operate_group` */
 
+-- 导出  表 auto.user_operate_group 结构
 DROP TABLE IF EXISTS `user_operate_group`;
-
-CREATE TABLE `user_operate_group` (
+CREATE TABLE IF NOT EXISTS `user_operate_group` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL COMMENT '组说明',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='操作组表';
 
-/*Data for the table `user_operate_group` */
+-- 数据导出被取消选择。
 
-/*Table structure for table `user_role` */
 
+-- 导出  表 auto.user_role 结构
 DROP TABLE IF EXISTS `user_role`;
-
-CREATE TABLE `user_role` (
+CREATE TABLE IF NOT EXISTS `user_role` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `type` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='角色';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色';
 
-/*Data for the table `user_role` */
+-- 数据导出被取消选择。
 
-insert  into `user_role`(`id`,`name`,`type`) values (1,'系统管理员',0),(2,'个人会员',1),(3,'企业会员',2),(4,'运营管理员',3);
 
-/*Table structure for table `user_status` */
-
+-- 导出  表 auto.user_status 结构
 DROP TABLE IF EXISTS `user_status`;
-
-CREATE TABLE `user_status` (
+CREATE TABLE IF NOT EXISTS `user_status` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL COMMENT '用户状态',
   `level` int(10) DEFAULT NULL COMMENT '用户等级',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `user_status` */
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+-- 数据导出被取消选择。
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
