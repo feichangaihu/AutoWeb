@@ -19,12 +19,12 @@ import com.care.bean.qq.QQBasicUserInfo;
 import com.care.config.Config;
 import com.care.config.Constant;
 import com.care.config.Oauth;
-import com.care.mybatis.bean.OpenID;
 import com.care.mybatis.bean.User;
-import com.care.service.OpenIDService;
-import com.care.service.OpenIDServiceImpl;
+import com.care.mybatis.bean.UserOpenId;
 import com.care.service.RoleService;
 import com.care.service.RoleServiceImpl;
+import com.care.service.UserOpenIDService;
+import com.care.service.UserOpenIdServiceImpl;
 import com.care.service.UserService;
 import com.care.service.UserServiceImpl;
 import com.care.utils.JSONUtil;
@@ -33,10 +33,9 @@ import com.care.utils.QQUtil;
 @Path("/user")
 public class UserAction extends BaseAction {
 
-	
 	private Logger log = LoggerFactory.getLogger(UserAction.class);
 	private UserService userService = getCtx().getBean(UserServiceImpl.class);
-	private OpenIDService openIDService = getCtx().getBean(OpenIDServiceImpl.class);
+	private UserOpenIDService openIDService = getCtx().getBean(UserOpenIdServiceImpl.class);
 	private RoleService roleService = getCtx().getBean(RoleServiceImpl.class);
 
 	/**
@@ -78,18 +77,15 @@ public class UserAction extends BaseAction {
 			if (userInfo != null && userInfo.getRet() == 0) {
 				userInfo.setOpenID(openIDMap.get("openid"));
 				// 将openID插入数据库
-				OpenID openID = new OpenID();
+				UserOpenId openID = new UserOpenId();
 				openID.setMeta(JSONUtil.toJson(userInfo));
-				openID.setOpenid(openIDMap.get("openid"));
+				openID.setOpenId(openIDMap.get("openid"));
 				openID.setVendor(Constant.OAUTH_QQ_NAME);
 				openID.setTime(new Date());
-				int add = openIDService.addUpdateOpenID(openID);
-				if (add == 1) {
-					// 获取数据库最新的openID
-					openID = openIDService.getOpenID(openID.getOpenid());
-					log.info("Add openID:{} Table=>{}", openID.getOpenid(), add);
-					saveToSession(Constant.SESSION_openID, openID);
-				}
+				int add = openIDService.addUpdateUserOpenId(openID);
+
+				log.info("Add openID:{} Table=>{}", openID, add);
+				saveToSession(Constant.SESSION_openID, openID);
 
 				// save userInfo to session
 				saveToSession(Constant.OAUTH_QQ_SESSION_USERINFO, userInfo);
@@ -138,19 +134,18 @@ public class UserAction extends BaseAction {
 			@FormParam("role") int roleId) {
 		RetValue rv = getRetValue("redirectReg");
 		try {
-			log.info("{}:{}", rv.getAction(), email);
-
+			log.debug("{}:{}", rv.getAction(), email);
 			User user = new User();
 			user.setEmail(email);
 			user.setPassword(password);
 			user.setRoleId(roleId);
 			// openid
 			if (openid != null) {
-				OpenID openID = openIDService.getOpenID(openid);
+				UserOpenId openID = openIDService.getUserOpenId(openid);
 				if (openID == null) {
-					openIDService.addUpdateOpenID(openID);
+					openIDService.addUpdateUserOpenId(openID);
 				} else {
-					user.setOpenId(openID.getId());
+					user.setOpenId(openid);
 				}
 			}
 
@@ -173,22 +168,24 @@ public class UserAction extends BaseAction {
 
 	@POST
 	@Path("login")
-	public String login(@FormParam("email") String email, @FormParam("password") String password) {
+	@Produces(MediaType.APPLICATION_JSON)
+	public String login(@FormParam("key") String key, @FormParam("password") String password) {
 		RetValue rv = getRetValue("login");
 		try {
-			log.info("{}:email:{} password:{}", rv.getAction(), email, password);
-			User user = userService.login(email, password);
+			log.debug("{}:key:{} password:{}", rv.getAction(), key, password);
+			User user = userService.login(key, password);
 			if (user != null) {
 				saveToSession(Constant.SESSION_USER, user);
 				rv.setCode(1);
 				rv.setMsg("login sucess");
 
-				// openID
-				OpenID openID = openIDService.getOpenID(user.getOpenId());
-				if (openID != null) {
-					saveToSession(Constant.SESSION_openID, openID);
+				if (user.getOpenId() != null) {
+					// openID
+					UserOpenId openID = openIDService.getUserOpenId(user.getOpenId());
+					if (openID != null) {
+						saveToSession(Constant.SESSION_openID, openID);
+					}
 				}
-
 				// response.sendRedirect("/wsyy");
 			} else {
 				rv.setCode(0);
@@ -197,6 +194,7 @@ public class UserAction extends BaseAction {
 		} catch (Exception e) {
 			rv.setCode(-1);
 			rv.setMsg(e.getMessage());
+			log.error("login", e);
 		}
 		return getRetValueJson(rv);
 	}

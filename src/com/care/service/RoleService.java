@@ -2,12 +2,12 @@ package com.care.service;
 
 import java.util.List;
 
-import com.care.mybatis.bean.Role;
+import com.care.mybatis.bean.UserRole;
 
 public interface RoleService {
 
-	public abstract List<Role> getAllRoles();
+	public abstract List<UserRole> getAllRoles();
 
-	public abstract Role getRole(int id);
+	public abstract UserRole getRole(int id);
 
 }

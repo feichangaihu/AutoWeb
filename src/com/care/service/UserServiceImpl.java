@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.care.mybatis.bean.User;
 import com.care.mybatis.bean.UserExample;
+import com.care.mybatis.bean.UserExample.Criteria;
 import com.care.mybatis.dao.UserMapper;
 
 @Service
@@ -39,15 +40,23 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User login(String email, String password) {
+	public User login(String key, String password) {
 		UserExample userExample = new UserExample();
-		userExample.createCriteria().andPasswordEqualTo(password).andEmailEqualTo(email);
-		List<User> list = userMapper.selectByExample(userExample);
-		if (CollectionUtils.isEmpty(list)) {
-			return null;
-		}
-		return list.get(0);
 
+		Criteria createCriteria = userExample.createCriteria();
+		createCriteria.andPasswordEqualTo(password);
+
+		Criteria email = userExample.createCriteria();
+		userExample.or(email);
+		
+		Criteria name = userExample.createCriteria();
+		name.andNameEqualTo(key);
+		userExample.or(name);
+
+		
+
+		List<User> list = userMapper.selectByExample(userExample);
+		return CollectionUtils.isEmpty(list) ? null : list.get(0);
 	}
 
 	@Override

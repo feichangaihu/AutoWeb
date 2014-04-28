@@ -41,7 +41,7 @@
 		
 		<table tableName="user_role" domainObjectName="UserRole"></table>
 		<table tableName="user_open_id" domainObjectName="UserOpenId"></table>
-		<table tableName="user_role" domainObjectName="UserRole"></table>
+		<table tableName="user" domainObjectName="User"></table>
 		
 	</context>
 </generatorConfiguration>

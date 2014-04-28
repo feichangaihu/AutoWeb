@@ -5,29 +5,27 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.care.mybatis.bean.Role;
-import com.care.mybatis.bean.RoleExample;
-import com.care.mybatis.dao.RoleMapper;
+import com.care.mybatis.bean.UserRole;
+import com.care.mybatis.dao.UserRoleMapper;
 
 @Service
 public class RoleServiceImpl implements RoleService {
 	@Autowired
-	private RoleMapper roleMapper;
+	private UserRoleMapper roleMapper;
 	
 	/* (non-Javadoc)
 	 * @see com.care.service.RoleService#getAllRoles()
 	 */
 	@Override
-	public List<Role> getAllRoles(){
-		RoleExample example = new RoleExample();
-		return roleMapper.selectByExample(example);
+	public List<UserRole> getAllRoles(){
+		return roleMapper.selectByExample(null);
 	}
 	
 	/* (non-Javadoc)
 	 * @see com.care.service.RoleService#getRole(int)
 	 */
 	@Override
-	public Role getRole(int id){
+	public UserRole getRole(int id){
 		return roleMapper.selectByPrimaryKey(id);
 	}
 }
