@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>后台管理系统</title>
+        <link rel="stylesheet" type="text/css" href="js/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="js/themes/icon.css">
+		<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+		<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="js/locale/easyui-lang-zh_CN.js"></script>
+		<style type="text/css">
+		a{text-decoration:none;color:black;}
+		body{background-color:#DDD;}
+		</style>
+        <script>
+        function login(){
+			var loginUrl = "../jaxrs/user/login";
+			var login_data = {}; 
+			$(":input").each(function(){
+				  var k = $(this).attr("name");
+				  if (k){
+					  var v = $(this).val();
+					  console.log("k,v=",k, v);
+					  login_data[k] = v;
+				  }
+			  });
+			
+			$.post(loginUrl, login_data, function(response){
+				console.log("response:", response);
+				if(response.code == 1){
+					window.location ="main.html";
+				}
+			}, "json")
+		}
+        </script>
+</head>
+<body>
+<div style="margin:0 auto;width:800px;">
+<div id="win" class="easyui-window" minimizable="false" maximizable="false"  collapsible="false"  title="Login" style="width:300px;height:220px;">
+    <form action="main.htm" method="post" style="padding:10px 20px 10px 40px;" name="login_f">
+        <p>用户名: 
+        	<input class="easyui-validatebox" type="text" id="n" name="key" required="true" value="gaojie"/>
+        </p>
+        <p>密&nbsp;&nbsp;码: 
+        	<input class="easyui-validatebox"  id="pwd" type="password" name="password" required="true" value="123">
+        </p>
+        <p>验证码: <input class="easyui-validatebox" type="text" id="n" name="ckcode" required="true" style="width:80px;"/><img src="images/logo.gif" width="70" height="20"/></p>
+        <div style="padding:5px;text-align:center;">
+            <a href="#" class="easyui-linkbutton" icon="icon-ok" onclick="login()">登录</a>
+            <a href="#" class="easyui-linkbutton" icon="icon-cancel" onclick="document.login_f.reset()">重置</a>
+        </div>
+    </form>
+</div>
+</div>
+
+</body>
+</html>

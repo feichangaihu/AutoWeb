@@ -1,0 +1,113 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+    <title>Complex DataGrid - jQuery EasyUI Demo</title>  
+       <link rel="stylesheet" type="text/css" href="js/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="js/themes/icon.css">
+		<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+		<script type="text/javascript" src="js/jquery.easyui-1.3.1.min.js"></script>
+		<script type="text/javascript" src="js/locale/easyui-lang-zh_CN.js"></script>
+<script>  
+        var products = [  
+            {productid:'分类ID',name:'Dalmation'},  
+            {productid:'分类名',name:'Koi'},  
+        ];  
+        function productFormatter(value){  
+            for(var i=0; i<products.length; i++){  
+                if (products[i].productid == value) return products[i].name;  
+            }  
+            return value;  
+        }  
+        $(function(){  
+            var lastIndex;  
+            $('#tt').datagrid({  
+                toolbar:[{  
+                    text:'新建',  
+                    iconCls:'icon-add',  
+                    handler:function(){  
+                        $('#tt').datagrid('endEdit', lastIndex);  
+                        $('#tt').datagrid('appendRow',{  
+                            itemid:'',  
+                            productid:'',  
+                            listprice:'',  
+                            unitprice:'',  
+                            attr1:'',  
+                            status:'P'  
+                        });  
+                        lastIndex = $('#tt').datagrid('getRows').length-1;  
+                        $('#tt').datagrid('selectRow', lastIndex);  
+                        $('#tt').datagrid('beginEdit', lastIndex);  
+                    }  
+                },
+                '-',
+                {  
+                    text:'删除',  
+                    iconCls:'icon-remove',  
+                    handler:function(){  
+                        var row = $('#tt').datagrid('getSelected');  
+                        if (row){  
+                            var index = $('#tt').datagrid('getRowIndex', row);  
+                            $('#tt').datagrid('deleteRow', index);  
+                        }  
+                    }  
+                },'-',{  
+                    text:'保存',  
+                    iconCls:'icon-save',  
+                    handler:function(){  
+                        $('#tt').datagrid('acceptChanges');  
+                    }  
+                },'-',{  
+                    text:'撤消',  
+                    iconCls:'icon-undo',  
+                    handler:function(){  
+                        $('#tt').datagrid('rejectChanges');  
+                    }  
+                },'-',{  
+                    text:'取得新建行数',  
+                    iconCls:'icon-search',  
+                    handler:function(){  
+                        var rows = $('#tt').datagrid('getChanges');  
+                        alert('新建: ' + rows.length + ' 行');  
+                    }  
+                }],  
+                onBeforeLoad:function(){  
+                    $(this).datagrid('rejectChanges');  
+                },  
+                onClickRow:function(rowIndex){  
+                    if (lastIndex != rowIndex){  
+                        $('#tt').datagrid('endEdit', lastIndex);  
+                        $('#tt').datagrid('beginEdit', rowIndex);  
+                    }  
+                    lastIndex = rowIndex;  
+                }  
+            });  
+        });  
+    </script>  
+</head>  
+<body>  
+    <h2>配件分类</h2>  
+    <table id="tt" style="width:700px;height:auto"  
+            data-options="iconCls:'icon-edit',singleSelect:true,idField:'itemid',url:'datagrid_data2.json'"  
+            title="配件分类" class="easyui-treegrid">  
+        <thead>  
+            <tr>  
+                <th data-options="field:'itemid',width:100">分类ID</th>  
+               <!-- 
+                <th data-options="field:'productid',width:100,formatter:productFormatter,  
+                        editor:{  
+                            type:'combobox',  
+                            options:{  
+                                valueField:'productid',  
+                                textField:'name',  
+                                data:products,  
+                                required:true  
+                            }  
+                        }">Product</th>  
+                         -->
+                <th data-options="field:'widgetType',width:200,align:'right',editor:{type:'numberbox',options:{precision:1}}">分类名</th>  
+            </tr>  
+        </thead>  
+    </table>  
+</body>  
+</html>  

@@ -10,6 +10,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.logging.log4j.core.helpers.FileUtils;
+
 import com.care.utils.HttpUtil;
 import com.care.utils.XMLUtil;
 
@@ -19,10 +21,8 @@ import com.care.utils.XMLUtil;
  */
 @XmlRootElement
 public class Config {
-	private static final String name = "config.xml";
+	public static final String FILE_NAME = "config.xml";
 	private static Config instance;
-	private static URI confBaseURI;
-
 	public List<Oauth> getOauths() {
 		return oauths;
 	}
@@ -33,10 +33,10 @@ public class Config {
 	public static void refresh(URI confBaseURI) {
 		File xmlFile = null;
 		try {
-			xmlFile = new File(confBaseURI.toString(), name);
+			xmlFile = FileUtils.fileFromURI(confBaseURI);
 			instance = XMLUtil.parseXml(xmlFile, Config.class);
 		} catch (JAXBException e) {
-			System.err.printf("%s: 解析出错!\n", xmlFile.toURI());
+			System.err.printf("%s: 解析出错!\n", xmlFile.toString());
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -47,9 +47,8 @@ public class Config {
 		}
 	}
 
-	public static Config getInstance(String baseURI) throws URISyntaxException {
-		confBaseURI = HttpUtil.buildURI(baseURI, null);
-		refresh(confBaseURI);
+	public static Config getInstance(URI confURI) throws URISyntaxException {
+		refresh(confURI);
 		return instance;
 	}
 

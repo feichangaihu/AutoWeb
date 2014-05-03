@@ -53,7 +53,6 @@ public class UserServiceImpl implements UserService {
 		name.andNameEqualTo(key);
 		userExample.or(name);
 
-		
 
 		List<User> list = userMapper.selectByExample(userExample);
 		return CollectionUtils.isEmpty(list) ? null : list.get(0);
